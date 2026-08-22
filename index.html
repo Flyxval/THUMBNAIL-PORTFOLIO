@@ -18,16 +18,16 @@
   --surface:   #0C0C17;
   --card:      #11111E;
   --card-hover:#181828;
-  --accent:    #FF0073;
-  --accent-2:  #FF4D9E;
-  --accent-3:  #CC005C;
+  --accent:    #9B5CF6;
+  --accent-2:  #C084FC;
+  --accent-3:  #7C3AED;
   --gold:      #E879F9;
   --text:      #FFFFFF;
   --muted:     #A0A0B8;
   --subtle:    #4A4A6A;
-  --border:    rgba(255,0,115,0.18);
-  --border-hi: rgba(255,0,115,0.45);
-  --glow:      rgba(255,0,115,0.35);
+  --border:    rgba(155,92,246,0.18);
+  --border-hi: rgba(155,92,246,0.45);
+  --glow:      rgba(155,92,246,0.35);
   --font-display: 'Montserrat', sans-serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
@@ -205,7 +205,7 @@ nav.scrolled {
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(124,58,237,0.22) 0%, transparent 70%),
-              radial-gradient(ellipse 50% 80% at 20% 80%, rgba(255,0,115,0.1) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 80% at 20% 80%, rgba(155,92,246,0.1) 0%, transparent 60%),
               radial-gradient(ellipse 40% 40% at 90% 10%, rgba(192,132,252,0.08) 0%, transparent 60%);
 }
 
@@ -237,8 +237,8 @@ nav.scrolled {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255,0,115,0.15);
-  border: 1px solid rgba(255,0,115,0.4);
+  background: rgba(155,92,246,0.15);
+  border: 1px solid rgba(155,92,246,0.4);
   color: var(--accent-2);
   font-size: 0.78rem;
   font-weight: 700;
@@ -278,7 +278,7 @@ nav.scrolled {
 .hero-headline .accent-line {
   display: block;
   color: var(--accent);
-  text-shadow: 0 0 60px rgba(255,0,115,0.5), 0 0 120px rgba(255,0,115,0.2);
+  text-shadow: 0 0 60px rgba(155,92,246,0.5), 0 0 120px rgba(155,92,246,0.2);
 }
 
 .hero-sub {
@@ -308,12 +308,12 @@ nav.scrolled {
   padding: 0.85rem 2rem;
   border-radius: 8px;
   transition: all var(--transition);
-  box-shadow: 0 4px 24px rgba(255,0,115,0.45), 0 0 0 1px rgba(255,0,115,0.2);
+  box-shadow: 0 4px 24px rgba(155,92,246,0.45), 0 0 0 1px rgba(155,92,246,0.2);
 }
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--accent-2), var(--accent));
   transform: translateY(-2px);
-  box-shadow: 0 10px 36px rgba(255,0,115,0.65), 0 0 0 1px rgba(255,0,115,0.4);
+  box-shadow: 0 10px 36px rgba(155,92,246,0.65), 0 0 0 1px rgba(155,92,246,0.4);
 }
 
 .btn-secondary {
@@ -331,9 +331,9 @@ nav.scrolled {
 }
 .btn-secondary:hover {
   border-color: var(--accent);
-  background: rgba(255,0,115,0.1);
+  background: rgba(155,92,246,0.1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(255,0,115,0.2);
+  box-shadow: 0 4px 20px rgba(155,92,246,0.2);
 }
 
 .hero-stats {
@@ -490,7 +490,7 @@ section { padding: 60px 5%; width: 100%; max-width: 100vw; overflow: hidden; scr
 .thumb-item:hover {
   transform: translateY(-5px);
   border-color: var(--border-hi);
-  box-shadow: 0 16px 40px rgba(255,0,115,0.25);
+  box-shadow: 0 16px 40px rgba(155,92,246,0.25);
 }
 .thumb-item:hover img { transform: scale(1.06); }
 
@@ -520,7 +520,7 @@ section { padding: 60px 5%; width: 100%; max-width: 100vw; overflow: hidden; scr
   color: #fff;
   font-size: 1.25rem;
   z-index: 3;
-  box-shadow: 0 4px 20px rgba(255,0,115,0.5);
+  box-shadow: 0 4px 20px rgba(155,92,246,0.5);
 }
 .thumb-item:hover .thumb-overlay-zoom {
   opacity: 1;
@@ -668,7 +668,7 @@ section { padding: 60px 5%; width: 100%; max-width: 100vw; overflow: hidden; scr
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255,0,115,0.18);
+  box-shadow: 0 0 0 3px rgba(155,92,246,0.18);
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--subtle); }
@@ -685,7 +685,7 @@ section { padding: 60px 5%; width: 100%; max-width: 100vw; overflow: hidden; scr
   border-radius: 8px;
   letter-spacing: 0.05em;
   transition: all var(--transition);
-  box-shadow: 0 4px 24px rgba(255,0,115,0.4);
+  box-shadow: 0 4px 24px rgba(155,92,246,0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -694,7 +694,7 @@ section { padding: 60px 5%; width: 100%; max-width: 100vw; overflow: hidden; scr
 .form-submit:hover {
   background: linear-gradient(135deg, var(--accent-2), var(--accent));
   transform: translateY(-2px);
-  box-shadow: 0 10px 36px rgba(255,0,115,0.6);
+  box-shadow: 0 10px 36px rgba(155,92,246,0.6);
 }
 
 .form-success {

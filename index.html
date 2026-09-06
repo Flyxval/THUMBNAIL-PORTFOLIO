@@ -8,7 +8,7 @@
 <title>FLYX.VISUALS — YouTube Thumbnail Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Google Fonts are loaded by JS only after cookie consent (GDPR: avoids sending IP to Google without consent) -->
 <style>
 /* ============================================
    DESIGN TOKENS
@@ -24,7 +24,7 @@
   --gold:      #E879F9;
   --text:      #FFFFFF;
   --muted:     #A0A0B8;
-  --subtle:    #4A4A6A;
+  --subtle:    #7A7A9C;
   --border:    rgba(155,92,246,0.18);
   --border-hi: rgba(155,92,246,0.45);
   --glow:      rgba(155,92,246,0.35);
@@ -920,9 +920,83 @@ footer {
   background: linear-gradient(135deg, var(--accent), var(--accent-3));
   border-color: transparent;
 }
+
+/* ============ ACCESSIBILITY ============ */
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 4px; }
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 10000;
+  background: var(--accent); color: #fff; padding: 0.6rem 1rem; border-radius: 0 0 8px 0;
+  font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ============ FORM CONSENT ============ */
+.form-consent {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  margin: 1.25rem 0 0.5rem; font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+}
+.form-consent input[type="checkbox"] { margin-top: 0.2rem; width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
+.form-consent a { color: var(--accent-2); text-decoration: underline; }
+.form-consent label { cursor: pointer; }
+
+/* ============ FOOTER LEGAL ============ */
+.footer-legal { position: static; height: auto; padding: 0; z-index: auto; display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.footer-legal a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color var(--transition); }
+.footer-legal a:hover { color: var(--accent-2); text-decoration: underline; }
+
+/* ============ LEGAL MODAL ============ */
+.legal-overlay {
+  position: fixed; inset: 0; z-index: 9998; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.75); padding: 1rem; backdrop-filter: blur(4px);
+}
+.legal-overlay[hidden] { display: none; }
+.legal-box {
+  background: var(--surface); border: 1px solid var(--border-hi); border-radius: 16px;
+  max-width: 760px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;
+  padding: 2.5rem 2rem;
+}
+.legal-close {
+  position: sticky; top: 0; float: right; margin: -1rem -0.5rem 0 0;
+  background: var(--card); border: 1px solid var(--border); color: var(--text);
+  width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; line-height: 1; cursor: pointer;
+}
+.legal-close:hover { border-color: var(--border-hi); }
+.legal-content h2 { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--text); }
+.legal-content h3 { font-size: 1.05rem; margin: 1.5rem 0 0.4rem; color: var(--accent-2); }
+.legal-content p, .legal-content li { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.6rem; }
+.legal-content ul { padding-left: 1.2rem; margin-bottom: 0.6rem; }
+.legal-content .legal-updated { font-size: 0.78rem; color: var(--subtle); margin-bottom: 1.5rem; }
+.legal-content a { color: var(--accent-2); }
+
+/* ============ COOKIE BANNER ============ */
+.cookie-banner {
+  position: fixed; bottom: 1rem; left: 1rem; right: 1rem; z-index: 9997;
+  max-width: 720px; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border-hi); border-radius: 14px;
+  padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-text { font-size: 0.82rem; color: var(--muted); line-height: 1.55; flex: 1 1 320px; margin: 0; }
+.cookie-text a { color: var(--accent-2); }
+.cookie-actions { display: flex; gap: 0.6rem; flex-shrink: 0; }
+.cookie-btn { font-size: 0.82rem; font-weight: 700; padding: 0.6rem 1.1rem; border-radius: 100px; cursor: pointer; border: 1px solid var(--border); transition: all var(--transition); }
+.cookie-reject { background: transparent; color: var(--muted); }
+.cookie-reject:hover { color: var(--text); border-color: var(--border-hi); }
+.cookie-accept { background: linear-gradient(135deg, var(--accent), var(--accent-3)); color: #fff; border-color: transparent; }
+.cookie-accept:hover { filter: brightness(1.1); }
+@media (max-width: 480px) {
+  .cookie-actions { width: 100%; }
+  .cookie-btn { flex: 1; }
+}
 </style>
 </head>
 <body>
+<a href="#portfolio" class="skip-link" data-i18n="a11y.skip">Přeskočit na obsah</a>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -942,7 +1016,7 @@ footer {
       <span class="lang-sep">/</span>
       <button class="lang-btn" data-lang="cs" onclick="setLang('cs')">CZ</button>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -1008,20 +1082,20 @@ footer {
         <div id="formContent">
           <div class="form-row">
             <div class="form-group">
-              <label><span data-i18n="form.name">Full Name</span> <span>*</span></label>
+              <label for="fname"><span data-i18n="form.name">Full Name</span> <span aria-hidden="true">*</span></label>
               <input type="text" id="fname" placeholder="Your name" data-i18n-ph="form.nameph" required>
             </div>
             <div class="form-group">
-              <label><span data-i18n="form.email">Email Address</span> <span>*</span></label>
+              <label for="femail"><span data-i18n="form.email">Email Address</span> <span aria-hidden="true">*</span></label>
               <input type="email" id="femail" placeholder="your@email.com" required>
             </div>
           </div>
           <div class="form-group">
-            <label><span data-i18n="form.channel">YouTube Channel</span> <span>*</span></label>
+            <label for="fchannel"><span data-i18n="form.channel">YouTube Channel</span></label>
             <input type="text" id="fchannel" placeholder="https://youtube.com/@yourchannel">
           </div>
           <div class="form-group">
-            <label><span data-i18n="form.platform">Where do you want to call?</span> <span>*</span></label>
+            <label for="fplatform"><span data-i18n="form.platform">Where do you want to call?</span> <span aria-hidden="true">*</span></label>
             <select id="fplatform">
               <option value="" disabled selected data-i18n="form.platformph">Select a call platform</option>
               <option>Zoom</option>
@@ -1031,7 +1105,7 @@ footer {
             </select>
           </div>
           <div class="form-group">
-            <label><span data-i18n="form.niche">Niche / Category</span> <span>*</span></label>
+            <label for="fniche"><span data-i18n="form.niche">Niche / Category</span></label>
             <select id="fniche">
               <option value="" disabled selected data-i18n="form.nicheph">Select your niche</option>
               <option data-i18n="niche.gaming">Gaming</option>
@@ -1048,12 +1122,16 @@ footer {
             </select>
           </div>
           <div class="form-group">
-            <label><span data-i18n="form.details">Project Details</span> <span>*</span></label>
+            <label for="fdetails"><span data-i18n="form.details">Project Details</span> <span aria-hidden="true">*</span></label>
             <textarea id="fdetails" placeholder="Describe your video topic, desired style, any references, colors you like, text to include, etc." data-i18n-ph="form.detailsph"></textarea>
           </div>
           <div class="form-group">
-            <label data-i18n="form.deadline">Deadline</label>
+            <label for="fdeadline" data-i18n="form.deadline">Deadline</label>
             <input type="date" id="fdeadline">
+          </div>
+          <div class="form-consent">
+            <input type="checkbox" id="fconsent" required>
+            <label for="fconsent" data-i18n="form.consent">Souhlasím se zpracováním svých osobních údajů za účelem vyřízení mé poptávky dle <a href="#" onclick="openLegal('privacy');return false;">Zásad ochrany osobních údajů</a>. *</label>
           </div>
           <button class="form-submit" onclick="submitForm()">
             <span>✦</span> <span data-i18n="form.submit">Book a Call</span>
@@ -1087,8 +1165,30 @@ footer {
 
   <div class="footer-bottom">
     <p class="footer-copy" data-i18n="footer.copy">© 2025 FLYX.VISUALS — All rights reserved.</p>
+    <nav class="footer-legal" aria-label="Legal">
+      <a href="#" onclick="openLegal('privacy');return false;" data-i18n="legal.privacy">Zásady ochrany osobních údajů</a>
+      <a href="#" onclick="openLegal('terms');return false;" data-i18n="legal.terms">Obchodní podmínky</a>
+      <a href="#" onclick="openLegal('cookies');return false;" data-i18n="legal.cookies">Zásady cookies</a>
+    </nav>
   </div>
 </footer>
+
+<!-- ============ LEGAL MODAL ============ -->
+<div class="legal-overlay" id="legalOverlay" role="dialog" aria-modal="true" aria-labelledby="legalTitle" hidden>
+  <div class="legal-box">
+    <button class="legal-close" onclick="closeLegal()" aria-label="Zavřít">&times;</button>
+    <div class="legal-content" id="legalContent" tabindex="-1"></div>
+  </div>
+</div>
+
+<!-- ============ COOKIE CONSENT BANNER ============ -->
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Cookie consent" hidden>
+  <p class="cookie-text" data-i18n="cookie.text">Tento web používá pouze nezbytné funkční úložiště a po vašem souhlasu načítá webová písma Google (Google Fonts). Podrobnosti v <a href="#" onclick="openLegal('cookies');return false;">Zásadách cookies</a>.</p>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-reject" onclick="setCookieConsent(false)" data-i18n="cookie.reject">Jen nezbytné</button>
+    <button class="cookie-btn cookie-accept" onclick="setCookieConsent(true)" data-i18n="cookie.accept">Přijmout vše</button>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
@@ -1114,100 +1214,23 @@ const I18N = {
     "hero.h1a": "HIGH-CONVERTING",
     "hero.h1b": "YOUTUBE",
     "hero.h1c": "THUMBNAILS",
-    "hero.sub": "I design professional thumbnails that make viewers stop scrolling, get more clicks, higher CTR, and exponential view growth for content creators worldwide.",
     "hero.cta1": "Book a Call",
     "hero.cta2": "View Portfolio →",
-    "hero.stat1": "Thumbnails Created",
-    "hero.stat2": "Creators Served",
-    "hero.stat3": "Avg CTR Boost",
     // Portfolio
     "portfolio.eyebrow": "Portfolio",
     "portfolio.title1": "THUMBNAIL",
     "portfolio.title2": "SHOWCASE",
     "portfolio.sub": "Every thumbnail engineered to maximize click-through rate and stop viewers mid-scroll.",
-    "portfolio.tabgaming": "Gaming",
-    "portfolio.tabother": "Lifestyle",
-    "portfolio.more": "Show More",
     // Results
-    "results.eyebrow": "Results",
-    "results.title1": "REAL NUMBERS,",
-    "results.title2": "REAL GROWTH",
-    "results.sub": "Every design decision is backed by data. Here's what my thumbnails deliver.",
-    "results.r1label": "Average View Increase",
-    "results.r1desc": "Creators see an average 210% spike in views within the first 48 hours of publishing with a redesigned thumbnail.",
-    "results.r2label": "Average CTR Delivered",
-    "results.r2desc": "Industry average CTR sits at 2–3%. My thumbnails consistently push creators well into double-digit CTR territory.",
-    "results.r3label": "Turnaround Time",
-    "results.r3desc": "Most projects are delivered within 48 hours. Rush delivery available for time-sensitive uploads.",
-    "results.r4label": "Revisions Until Perfect",
-    "results.r4desc": "I don't consider a project done until you're completely satisfied. Unlimited revisions included.",
-    "results.bavtitle": "Before vs After",
-    "results.before": "Before",
-    "results.after": "After",
     // Bundles
-    "bundles.eyebrow": "Bundles",
-    "bundles.title1": "PACKAGES &",
-    "bundles.title2": "PRICING",
-    "bundles.sub": "Save more when you order in bulk. Perfect for creators who upload consistently.",
-    "bundles.thumbnails": "Thumbnails",
-    "bundles.each": "each",
-    "bundles.popular": "Most Popular",
-    "bundles.getstarted": "Get Started",
-    "bundles.single": "Single Thumbnail",
-    "bundles.singledesc": "One custom high-converting thumbnail, made to order.",
-    "bundles.branding": "YouTube Profile Branding",
-    "bundles.brandingdesc": "Profile picture, channel banner & two starting thumbnails.",
-    "bundles.order": "Order",
-    "bundles.term1title": "Payment upfront",
-    "bundles.term1desc": "Full payment is required before any work begins on your bundle.",
-    "bundles.term2title": "Use within 1.5 months",
-    "bundles.term2desc": "Each thumbnail in a bundle must be claimed within one and a half months. Any unused thumbnail past that window expires — one at a time, each time the deadline passes.",
     // About
-    "about.badgerole": "Thumbnail Designer",
-    "about.eyebrow": "About",
-    "about.title1": "THE DESIGNER",
-    "about.title2": "BEHIND THE",
-    "about.title3": "CLICKS",
-    "about.story1pre": "I'm a ",
-    "about.story1hl": "freelance YouTube Thumbnail Designer",
-    "about.story1post": " obsessed with one thing: making viewers click. With years of studying what makes thumbnails convert and thousands of designs delivered, I've cracked the formula for maximum click-through rate.",
-    "about.story2pre": "Every thumbnail I design is the product of ",
-    "about.story2hl": "deep research into your niche, your competitors, and your audience psychology",
-    "about.story2post": ". It's not just art — it's strategic visual communication built to grab attention within 0.3 seconds.",
-    "about.philosophy": "\"A great thumbnail isn't decoration — it's the most important marketing asset in a creator's arsenal. I design each one like a billboard that has 0.3 seconds to convert a stranger into a viewer.\"",
-    "about.cta": "Book a Call",
     // FAQ
-    "faq.eyebrow": "FAQ",
-    "faq.title1": "COMMON",
-    "faq.title2": "QUESTIONS",
-    "faq.q1": "How long does a thumbnail take to complete?",
-    "faq.a1": "Most thumbnails are delivered within 48 hours of receiving all the required assets. Rush delivery within 24 hours is available for an additional fee. Complex designs or batch orders may take slightly longer — I'll always confirm a timeline upfront.",
-    "faq.q2": "What are your prices?",
-    "faq.a2": "A single thumbnail starts at 18€, with bundle packages for 5+ thumbnails offering significant savings. Use the order form to describe your project and I'll send a custom quote within a few hours. Quality-first pricing means you get agency-level design without agency-level cost.",
-    "faq.q3": "How many revisions are included?",
-    "faq.a3": "Unlimited revisions. I iterate until you're 100% satisfied with the result. Revisions are free as long as they're within the original scope. Major concept changes after approval may incur a small additional fee, but this rarely happens because I take detailed briefs upfront.",
-    "faq.q4": "What information do you need to get started?",
-    "faq.a4": "Fill out the order form with your channel niche, video topic, your photo (if using a face-forward thumbnail), any inspiration references, preferred color scheme, and any text you want included. The more detail you provide, the better the first draft. I'll also research your niche and competitors before starting.",
-    "faq.q5": "Do you offer bulk or monthly packages?",
-    "faq.a5": "Yes — bundle packages and monthly retainers are available for creators who upload weekly or more. These offer priority turnaround, discounted rates, and a consistent visual identity maintained across all your thumbnails. Contact me to discuss a custom package.",
-    "faq.q6": "Will the thumbnail actually improve my CTR?",
-    "faq.a6": "Every thumbnail I design is engineered specifically for CTR — using proven principles of color contrast, emotional triggers, facial expressions, and typography hierarchy. While I can't guarantee specific numbers (YouTube's algorithm plays a role too), my clients consistently see CTR improvements averaging 200–400% compared to their previous thumbnails.",
-    "faq.q7": "What file formats do you deliver?",
-    "faq.a7": "All thumbnails are delivered as high-resolution JPG files at 1920×1080px, 72 DPI — optimized and ready to upload directly to YouTube. PSD source files are available on request for an additional fee. Deliverables are shared via Google Drive or WeTransfer.",
     // Contact
     "contact.eyebrow": "Book a Call",
     "contact.title1": "LET'S HOP",
     "contact.title2": "ON A",
     "contact.title3": "QUICK CALL",
     "contact.sub": "Fill out the form and I'll get back to you within a few hours to arrange a call.",
-    "contact.f1title": "48-Hour Delivery",
-    "contact.f1desc": "Most orders delivered within 48 hours of project kickoff.",
-    "contact.f2title": "Unlimited Revisions",
-    "contact.f2desc": "We iterate until you're completely satisfied. No limit.",
-    "contact.f3title": "1920×1080 JPG Delivery",
-    "contact.f3desc": "YouTube-ready JPG files. PSD source available on request.",
-    "contact.f4title": "Direct Communication",
-    "contact.f4desc": "No middlemen. Work directly with the designer throughout.",
     "form.name": "Full Name",
     "form.nameph": "Your name",
     "form.email": "Email Address",
@@ -1244,6 +1267,15 @@ const I18N = {
     "footer.contacttitle": "Contact",
     "footer.orderthumb": "Book a Call",
     "footer.copy": "© 2025 FLYX.VISUALS — All rights reserved.",
+    "form.consent": "I agree to the processing of my personal data to handle my enquiry, per the <a href=\"#\" onclick=\"openLegal('privacy');return false;\">Privacy Policy</a>. *",
+    "form.consentalert": "Please agree to the processing of your personal data.",
+    "legal.privacy": "Privacy Policy",
+    "legal.terms": "Terms & Conditions",
+    "legal.cookies": "Cookie Policy",
+    "cookie.text": "This site uses only necessary functional storage and, after your consent, loads Google Fonts. Details in the <a href=\"#\" onclick=\"openLegal('cookies');return false;\">Cookie Policy</a>.",
+    "cookie.accept": "Accept all",
+    "cookie.reject": "Necessary only",
+    "a11y.skip": "Skip to content",
     "footer.made": "Crafted with ♥ for creators worldwide"
   },
   cs: {
@@ -1259,100 +1291,23 @@ const I18N = {
     "hero.h1a": "KLIKATELNÉ",
     "hero.h1b": "YOUTUBE",
     "hero.h1c": "NÁHLEDY",
-    "hero.sub": "Navrhuji profesionální náhledy, které diváky zastaví při scrollování, získají víc prokliků, vyšší CTR a exponenciální růst zhlédnutí pro tvůrce po celém světě.",
     "hero.cta1": "Rezervovat hovor",
     "hero.cta2": "Prohlédnout portfolio →",
-    "hero.stat1": "Vytvořených náhledů",
-    "hero.stat2": "Obsloužených tvůrců",
-    "hero.stat3": "Průměrný nárůst CTR",
     // Portfolio
     "portfolio.eyebrow": "Portfolio",
     "portfolio.title1": "UKÁZKY",
     "portfolio.title2": "NÁHLEDŮ",
     "portfolio.sub": "Každý náhled je navržený tak, aby maximalizoval míru prokliku a zastavil diváka uprostřed scrollování.",
-    "portfolio.tabgaming": "Gaming",
-    "portfolio.tabother": "Lifestyle",
-    "portfolio.more": "Zobrazit další",
     // Results
-    "results.eyebrow": "Výsledky",
-    "results.title1": "REÁLNÁ ČÍSLA,",
-    "results.title2": "REÁLNÝ RŮST",
-    "results.sub": "Každé rozhodnutí v designu se opírá o data. Tohle moje náhledy přinášejí.",
-    "results.r1label": "Průměrný nárůst zhlédnutí",
-    "results.r1desc": "Tvůrci zaznamenají v průměru o 210 % více zhlédnutí během prvních 48 hodin po zveřejnění s novým náhledem.",
-    "results.r2label": "Průměrné dosažené CTR",
-    "results.r2desc": "Průměrné CTR v oboru je 2–3 %. Moje náhledy tvůrce spolehlivě dostávají do dvouciferných hodnot.",
-    "results.r3label": "Doba dodání",
-    "results.r3desc": "Většina zakázek je hotová do 48 hodin. Expresní dodání je možné u časově citlivých videí.",
-    "results.r4label": "Revize až do dokonalosti",
-    "results.r4desc": "Zakázku nepovažuji za hotovou, dokud nejsi 100% spokojený. Neomezené revize v ceně.",
-    "results.bavtitle": "Před a po",
-    "results.before": "Před",
-    "results.after": "Po",
     // Bundles
-    "bundles.eyebrow": "Balíčky",
-    "bundles.title1": "BALÍČKY A",
-    "bundles.title2": "CENÍK",
-    "bundles.sub": "Ušetři, když objednáš ve větším množství. Ideální pro tvůrce, kteří nahrávají pravidelně.",
-    "bundles.thumbnails": "Náhledů",
-    "bundles.each": "za kus",
-    "bundles.popular": "Nejoblíbenější",
-    "bundles.getstarted": "Objednat",
-    "bundles.single": "Jeden náhled",
-    "bundles.singledesc": "Jeden custom vysoce proklikávaný náhled na míru.",
-    "bundles.branding": "Branding YouTube profilu",
-    "bundles.brandingdesc": "Profilová fotka, banner kanálu a dva úvodní náhledy.",
-    "bundles.order": "Objednat",
-    "bundles.term1title": "Platba předem",
-    "bundles.term1desc": "Před zahájením práce na balíčku je nutná plná platba předem.",
-    "bundles.term2title": "Využití do 1,5 měsíce",
-    "bundles.term2desc": "Každý náhled v balíčku musí být využit do jednoho a půl měsíce. Každý nevyužitý náhled po uplynutí této lhůty propadá — vždy po jednom, pokaždé když lhůta uplyne.",
     // About
-    "about.badgerole": "Designér náhledů",
-    "about.eyebrow": "O mně",
-    "about.title1": "DESIGNÉR",
-    "about.title2": "ZA TĚMI",
-    "about.title3": "PROKLIKY",
-    "about.story1pre": "Jsem ",
-    "about.story1hl": "freelance YouTube designér náhledů",
-    "about.story1post": " posedlý jednou věcí: aby diváci klikali. Po letech studia toho, co dělá náhledy proklikávané, a po tisících odevzdaných návrhů jsem rozluštil vzorec pro maximální míru prokliku.",
-    "about.story2pre": "Každý náhled, který navrhnu, je výsledkem ",
-    "about.story2hl": "důkladného výzkumu tvého oboru, konkurence a psychologie tvého publika",
-    "about.story2post": ". Není to jen umění — je to strategická vizuální komunikace, která upoutá pozornost během 0,3 sekundy.",
-    "about.philosophy": "\"Skvělý náhled není dekorace — je to nejdůležitější marketingový nástroj v arzenálu tvůrce. Každý navrhuji jako billboard, který má 0,3 sekundy na to, aby z cizince udělal diváka.\"",
-    "about.cta": "Rezervovat hovor",
     // FAQ
-    "faq.eyebrow": "FAQ",
-    "faq.title1": "ČASTÉ",
-    "faq.title2": "OTÁZKY",
-    "faq.q1": "Jak dlouho trvá vytvoření náhledu?",
-    "faq.a1": "Většina náhledů je dodána do 48 hodin od obdržení všech potřebných podkladů. Expresní dodání do 24 hodin je možné za příplatek. Složitější designy nebo větší objednávky mohou trvat o něco déle — termín vždy potvrdím předem.",
-    "faq.q2": "Jaké jsou ceny?",
-    "faq.a2": "Jeden náhled začíná na 18 €, balíčky pro 5+ náhledů nabízejí výraznou úsporu. Vyplň objednávkový formulář s popisem projektu a do pár hodin ti pošlu individuální nabídku. Kvalita na prvním místě znamená agenturní design bez agenturní ceny.",
-    "faq.q3": "Kolik revizí je zahrnuto?",
-    "faq.a3": "Neomezené revize. Iteruju, dokud nejsi 100% spokojený s výsledkem. Revize jsou zdarma, pokud jsou v rámci původního zadání. Zásadní změny konceptu po schválení mohou znamenat malý příplatek, ale to se stává jen zřídka, protože si zadání pečlivě připravuji předem.",
-    "faq.q4": "Jaké informace potřebuješ pro start?",
-    "faq.a4": "Vyplň objednávkový formulář s oborem kanálu, tématem videa, svou fotkou (pokud chceš náhled s obličejem), případnými referencemi, preferovaným barevným schématem a textem, který má být na náhledu. Čím víc detailů poskytneš, tím lepší bude první návrh. Před začátkem si také projdu tvůj obor a konkurenci.",
-    "faq.q5": "Nabízíš balíčky nebo měsíční spolupráci?",
-    "faq.a5": "Ano — balíčky i měsíční spolupráce jsou dostupné pro tvůrce, kteří nahrávají týdně nebo častěji. Nabízejí přednostní dodání, zvýhodněné ceny a konzistentní vizuální identitu napříč všemi tvými náhledy. Napiš mi a domluvíme individuální balíček.",
-    "faq.q6": "Zlepší ten náhled opravdu moje CTR?",
-    "faq.a6": "Každý náhled navrhuji konkrétně pro CTR — pomocí osvědčených principů barevného kontrastu, emočních spouštěčů, výrazů obličeje a hierarchie typografie. I když nemůžu garantovat konkrétní čísla (svou roli hraje i algoritmus YouTube), moji klienti běžně vidí zlepšení CTR v průměru o 200–400 % oproti jejich předchozím náhledům.",
-    "faq.q7": "V jakých formátech dodáváš soubory?",
-    "faq.a7": "Všechny náhledy dodávám jako JPG soubory ve vysokém rozlišení 1920×1080 px, 72 DPI — optimalizované a připravené k nahrání přímo na YouTube. Zdrojové PSD soubory jsou na vyžádání za příplatek. Soubory sdílím přes Google Drive nebo WeTransfer.",
     // Contact
     "contact.eyebrow": "Rezervovat hovor",
     "contact.title1": "POJĎME SI",
     "contact.title2": "KRÁTCE",
     "contact.title3": "ZAVOLAT",
     "contact.sub": "Vyplň formulář a do pár hodin se ti ozvu, abychom domluvili hovor.",
-    "contact.f1title": "Dodání do 48 hodin",
-    "contact.f1desc": "Většina zakázek dodána do 48 hodin od zahájení projektu.",
-    "contact.f2title": "Neomezené revize",
-    "contact.f2desc": "Iterujeme, dokud nejsi úplně spokojený. Bez limitu.",
-    "contact.f3title": "Dodání 1920×1080 JPG",
-    "contact.f3desc": "JPG soubory připravené pro YouTube. PSD zdroj na vyžádání.",
-    "contact.f4title": "Přímá komunikace",
-    "contact.f4desc": "Žádní prostředníci. Pracuješ přímo s designérem.",
     "form.name": "Celé jméno",
     "form.nameph": "Tvoje jméno",
     "form.email": "E-mailová adresa",
@@ -1389,6 +1344,15 @@ const I18N = {
     "footer.contacttitle": "Kontakt",
     "footer.orderthumb": "Rezervovat hovor",
     "footer.copy": "© 2025 FLYX.VISUALS — Všechna práva vyhrazena.",
+    "form.consent": "Souhlasím se zpracováním svých osobních údajů za účelem vyřízení mé poptávky dle <a href=\"#\" onclick=\"openLegal('privacy');return false;\">Zásad ochrany osobních údajů</a>. *",
+    "form.consentalert": "Prosím potvrďte souhlas se zpracováním osobních údajů.",
+    "legal.privacy": "Zásady ochrany osobních údajů",
+    "legal.terms": "Obchodní podmínky",
+    "legal.cookies": "Zásady cookies",
+    "cookie.text": "Tento web používá pouze nezbytné funkční úložiště a po vašem souhlasu načítá webová písma Google (Google Fonts). Podrobnosti v <a href=\"#\" onclick=\"openLegal('cookies');return false;\">Zásadách cookies</a>.",
+    "cookie.accept": "Přijmout vše",
+    "cookie.reject": "Jen nezbytné",
+    "a11y.skip": "Přeskočit na obsah",
     "footer.made": "Vytvořeno s ♥ pro tvůrce po celém světě"
   }
 };
@@ -1400,7 +1364,12 @@ function setLang(lang) {
   // Update all elements with data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (I18N[lang][key] !== undefined) el.textContent = I18N[lang][key];
+    const val = I18N[lang][key];
+    if (val !== undefined) {
+      // keys whose text contains HTML markup (e.g. consent/cookie links) use innerHTML
+      if (val.indexOf('<') !== -1) el.innerHTML = val;
+      else el.textContent = val;
+    }
   });
   // Update placeholders
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
@@ -1450,7 +1419,7 @@ function renderThumbs(animate = true) {
     const item = document.createElement('div');
     item.className = 'thumb-item';
     item.innerHTML = `
-      <img src="${src}" alt="Thumbnail" loading="lazy">
+      <img src="${src}" alt="YouTube thumbnail design by FLYX.VISUALS" loading="lazy">
       <div class="thumb-overlay"></div>
       <div class="thumb-overlay-zoom">🔍</div>`;
     item.addEventListener('click', () => openLightboxImg(src));
@@ -1472,7 +1441,7 @@ function renderThumbs(animate = true) {
 function openLightboxImg(src) {
   const lb = document.getElementById('lightbox');
   const inner = document.getElementById('lightboxInner');
-  inner.innerHTML = `<img src="${src}" alt="Thumbnail" style="width:100%;max-width:100%;max-height:85vh;height:auto;border-radius:12px;object-fit:contain;">`;
+  inner.innerHTML = `<img src="${src}" alt="YouTube thumbnail design by FLYX.VISUALS — enlarged view" style="width:100%;max-width:100%;max-height:85vh;height:auto;border-radius:12px;object-fit:contain;">`;
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -1540,6 +1509,12 @@ async function submitForm() {
 
   if (!name || !email || !details) {
     alert(t('form.alert'));
+    return;
+  }
+
+  const consent = document.getElementById('fconsent');
+  if (consent && !consent.checked) {
+    alert(t('form.consentalert'));
     return;
   }
 
@@ -1720,9 +1695,131 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 /* ============================================
    INIT
    ============================================ */
+/* ============================================
+   COOKIE CONSENT + GOOGLE FONTS GATING
+   ============================================ */
+function loadGoogleFonts() {
+  if (document.getElementById('gfonts')) return;
+  const l = document.createElement('link');
+  l.id = 'gfonts';
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap';
+  document.head.appendChild(l);
+}
+function getCookieConsent() {
+  try { return localStorage.getItem('flyx_cookie_consent'); } catch(e) { return null; }
+}
+function setCookieConsent(accepted) {
+  try { localStorage.setItem('flyx_cookie_consent', accepted ? 'all' : 'necessary'); } catch(e) {}
+  const banner = document.getElementById('cookieBanner');
+  if (banner) banner.hidden = true;
+  if (accepted) loadGoogleFonts();
+}
+function initCookies() {
+  const c = getCookieConsent();
+  if (c === 'all') { loadGoogleFonts(); }
+  else if (c === null) {
+    const banner = document.getElementById('cookieBanner');
+    if (banner) banner.hidden = false;
+  }
+  // if 'necessary', fonts stay off (system font fallback) — no 3rd-party request
+}
+
+/* ============================================
+   LEGAL MODAL (Privacy / Terms / Cookies)
+   ============================================ */
+let lastFocusedEl = null;
+function openLegal(type) {
+  const overlay = document.getElementById('legalOverlay');
+  const content = document.getElementById('legalContent');
+  content.innerHTML = LEGAL[type] || '';
+  document.getElementById('legalTitle') || content.setAttribute('id','legalContent');
+  // set aria-labelledby target
+  const h = content.querySelector('h2');
+  if (h) { h.id = 'legalTitle'; overlay.setAttribute('aria-labelledby','legalTitle'); }
+  lastFocusedEl = document.activeElement;
+  overlay.hidden = false;
+  document.body.style.overflow = 'hidden';
+  content.focus();
+  document.addEventListener('keydown', legalKeyHandler);
+}
+function closeLegal() {
+  const overlay = document.getElementById('legalOverlay');
+  overlay.hidden = true;
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', legalKeyHandler);
+  if (lastFocusedEl) lastFocusedEl.focus();
+}
+function legalKeyHandler(e) {
+  if (e.key === 'Escape') closeLegal();
+}
+// close on overlay backdrop click
+document.addEventListener('click', function(e){
+  const overlay = document.getElementById('legalOverlay');
+  if (overlay && !overlay.hidden && e.target === overlay) closeLegal();
+});
+
+/* Legal content — Czech. NOTE: doplň si své jméno/kontakt tam, kde je [DOPLNIT]. */
+const LEGAL = {
+  privacy: `
+    <h2>Zásady ochrany osobních údajů</h2>
+    <p class="legal-updated">Naposledy aktualizováno: 2025</p>
+    <p>Tyto zásady popisují, jak nakládám s osobními údaji, které mi poskytnete prostřednictvím kontaktního formuláře na webu flyxvisuals.com.</p>
+    <h3>Kdo zpracovává vaše údaje (správce)</h3>
+    <p>FLYX.VISUALS – Adam Pospíšil <br>Kontakt: gfx.flyx@gmail.com</p>
+    <h3>Jaké údaje zpracovávám</h3>
+    <ul>
+      <li>Jméno</li>
+      <li>E-mailová adresa</li>
+      <li>Odkaz na YouTube kanál (nepovinné)</li>
+      <li>Preferovaná platforma hovoru, obor, termín a popis projektu</li>
+    </ul>
+    <h3>Účel a právní základ</h3>
+    <p>Údaje zpracovávám výhradně za účelem vyřízení vaší poptávky a domluvení spolupráce. Právním základem je váš souhlas a provedení kroků před uzavřením smlouvy (čl. 6 odst. 1 písm. a) a b) GDPR).</p>
+    <h3>Zpracovatelé třetích stran</h3>
+    <p>Odeslání formuláře zajišťuje služba Web3Forms, která e-mail doručí do mé schránky. Web3Forms tak vystupuje jako zpracovatel. Web fonty (Google Fonts) se načítají pouze po vašem souhlasu s cookies.</p>
+    <h3>Doba uložení</h3>
+    <p>Údaje uchovávám po dobu nezbytnou k vyřízení poptávky, případně po dobu trvání spolupráce, a poté je smažu.</p>
+    <h3>Vaše práva</h3>
+    <p>Máte právo na přístup ke svým údajům, jejich opravu, výmaz, omezení zpracování, přenositelnost a právo podat námitku. Souhlas můžete kdykoli odvolat na gfx.flyx@gmail.com. Rovněž máte právo podat stížnost u Úřadu pro ochranu osobních údajů (uoou.gov.cz).</p>
+  `,
+  terms: `
+    <h2>Obchodní podmínky</h2>
+    <p class="legal-updated">Naposledy aktualizováno: 2025</p>
+    <h3>Úvod</h3>
+    <p>Tyto podmínky upravují poskytování grafických služeb (návrhy YouTube náhledů) pod značkou FLYX.VISUALS. Web slouží jako portfolio a k navázání kontaktu.</p>
+    <h3>Objednávka a průběh</h3>
+    <p>Poptávku podáte přes kontaktní formulář. Konkrétní rozsah, cena a termín se dohodnou individuálně před zahájením práce. Závazná objednávka vzniká vzájemným odsouhlasením zadání.</p>
+    <h3>Platba</h3>
+    <p>Platba probíhá po dodání hotového návrhu (není-li dohodnuto jinak).</p>
+    <h3>Revize</h3>
+    <p>Součástí je přiměřený počet revizí v rámci původního zadání. Zásadní změny nad rámec zadání mohou být zpoplatněny po předchozí domluvě.</p>
+    <h3>Dodání a užití</h3>
+    <p>Náhledy jsou dodávány digitálně. Po úplném zaplacení může klient dílo užívat pro svůj YouTube obsah.</p>
+    <h3>Portfolio</h3>
+    <p>Vyhrazuji si právo použít vytvořené návrhy ve svém portfoliu, pokud se nedohodneme jinak.</p>
+    <h3>Odpovědnost</h3>
+    <p>Návrhy jsou tvořeny s maximální péčí, nelze však garantovat konkrétní počty zhlédnutí ani míru prokliku — ty ovlivňuje řada faktorů mimo návrh (obsah, algoritmus atd.).</p>
+    <h3>Kontakt</h3>
+    <p>gfx.flyx@gmail.com</p>
+  `,
+  cookies: `
+    <h2>Zásady používání cookies</h2>
+    <p class="legal-updated">Naposledy aktualizováno: 2025</p>
+    <p>Tento web nepoužívá reklamní ani analytické sledovací cookies.</p>
+    <h3>Nezbytné (funkční) úložiště</h3>
+    <p>V prohlížeči ukládám drobné údaje nezbytné pro fungování webu — zvolený jazyk a váš souhlas s cookies. Toto úložiště nevyžaduje souhlas.</p>
+    <h3>Webová písma (Google Fonts)</h3>
+    <p>Po vašem souhlasu web načítá písma ze služby Google Fonts, což může znamenat přenos vaší IP adresy společnosti Google. Bez souhlasu se písma nenačítají a zobrazí se systémové písmo.</p>
+    <h3>Odvolání souhlasu</h3>
+    <p>Souhlas můžete kdykoli změnit vymazáním dat webu v prohlížeči, čímž se lišta se souhlasem znovu zobrazí.</p>
+  `
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   setLang(getLang());
   renderThumbs(true);
+  initCookies();
 });
 </script>
 </body>
